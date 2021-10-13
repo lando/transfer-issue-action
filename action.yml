@@ -13,6 +13,9 @@ inputs:
     description: 'Create a stub issue with title and description in original repo'
     default: true
     required: false
+  labels_file_path:
+    description: 'Create a label if it doesn't exist in the trasnferred repo and tag the transferred issue'
+    required: false
 outputs:
   transferred_issue_number:
     description: 'The issue number of the transferred issue'

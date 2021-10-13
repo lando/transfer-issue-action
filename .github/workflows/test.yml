@@ -20,7 +20,7 @@ jobs:
         with: 
           github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           destination_repo: 'action-test'
-
+          labels_file_path: '.github/transfer-issue-labels.yml'
       - name: echo transferred issue number
         run: echo ${{steps.run_action.outputs.transferred_issue_number}}     
 
