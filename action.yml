@@ -14,7 +14,7 @@ inputs:
     default: true
     required: false
   labels_file_path:
-    description: 'Create a label if it doesn't exist in the trasnferred repo and tag the transferred issue'
+    description: 'Create a label if it does not exist in the trasnferred repo and tag the transferred issue'
     required: false
 outputs:
   transferred_issue_number:
