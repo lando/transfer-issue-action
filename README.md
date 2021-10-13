@@ -57,9 +57,8 @@ Set a file path for the labels yaml file to create labels and tag them on the is
 The labels yaml is keyed as machine name to hex color.  
 
 ```
-labels:
-  needs-triage: 'FF0000'
-  test-label: '000000'
+needs-triage: 'FF0000'
+test-label: '000000'
 ```
 
 ## Notes
