@@ -1,3 +1,2 @@
-labels:
-  needs-triage: 'FF0000'
-  test-label: '000000'
+needs-triage: 'FF0000'
+test-label: '000000'
