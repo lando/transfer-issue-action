@@ -54,11 +54,11 @@ Set a file path for the labels yaml file to create labels and tag them on the is
 
 ### Label YAML File Example
 
-The labels yaml is keyed as machine name to hex color.  
+The labels yaml is keyed as name to hex color.  
 
 ```
-needs-triage: 'FF0000'
-test-label: '000000'
+'Needs Triage': 'FF0000'
+'Test Label': '000000'
 ```
 
 ## Notes
