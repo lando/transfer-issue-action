@@ -1,0 +1,26 @@
+name: Test Issue Action
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  test-action:
+    runs-on: ${{ matrix.os }}
+    env:
+      TERM: xterm
+    strategy:
+      matrix:
+        os:
+          - ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: run action
+        id: run_action
+        uses: ./
+        with: 
+          github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          destination_repo: 'action-test'
+
+      - name: echo transferred issue number
+        run: echo ${{steps.run_action.outputs.transferred_issue_number}}     
+

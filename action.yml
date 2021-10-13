@@ -1,0 +1,26 @@
+name: 'Transfer Issue & Create Stub'
+description: 'A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.'
+author: 'John Ouellet'
+inputs:
+  destination_repo:
+    description: 'The destination repo'
+    required: true
+  github-token:
+    description: 'The GitHub token used to create an authenticated client'
+    default: ${{ github.token }}
+    required: false
+  create_stub:
+    description: 'Create a stub issue with title and description in original repo'
+    default: true
+    required: false
+outputs:
+  transferred_issue_number:
+    description: 'The issue number of the transferred issue'
+  transferred_issue_url:
+    description: 'The issue url of the transferred issue'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  color: "green"
+  icon: "arrow-right-circle"  

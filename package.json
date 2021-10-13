@@ -1,0 +1,31 @@
+{
+  "name": "@lando/transfer-issue-action",
+  "description": "A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.",
+  "version": "1.0.0",
+  "author": "John Ouellet @labboy0276",
+  "license": "GPL-3.0",
+  "repository": "https://github.com/lando/transfer-issue-action",
+  "bugs": "https://github.com/lando/transfer-issue-action/issues",
+  "homepage": "https://github.com/lando/transfer-issue-action",
+  "keywords": [
+    "lando",
+    "transfer github issue",
+    "Github Actions"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@actions/core": "^1.5.0",
+    "@actions/github": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "lint": "eslint lib/index.js"
+  }
+}
