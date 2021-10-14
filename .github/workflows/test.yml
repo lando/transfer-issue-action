@@ -22,5 +22,6 @@ jobs:
           labels_file_path: '.github/transfer-issue-labels.yml'
           map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
       - name: echo transferred issue number
+        if: steps.run_action.outputs.transferred_issue_number != ''
         run: echo ${{steps.run_action.outputs.transferred_issue_number}}     
 
