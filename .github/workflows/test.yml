@@ -21,7 +21,10 @@ jobs:
           github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           labels_file_path: '.github/transfer-issue-labels.yml'
           map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
-      - name: echo transferred issue number
+      - name: Echo Output Data
         if: steps.run_action.outputs.transferred_issue_number != ''
-        run: echo ${{steps.run_action.outputs.transferred_issue_number}}     
+        run: |
+          echo ${{steps.run_action.outputs.transferred_issue_number}}
+          echo ${{steps.run_action.outputs.transferred_issue_url}} 
+          echo ${{steps.run_action.outputs.transferred_repo}}    
 

@@ -85,7 +85,7 @@ trill: tronic
 
 ## Advanced Example
 
-This will use our yml file to check tags to dtermine which repos to send them to.  Useful if you have a more complex use case.
+In this example, we are not creating a stub and just updating the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
 
 ```
 - name: Transfer Issue & Create Stub
@@ -99,12 +99,11 @@ This will use our yml file to check tags to dtermine which repos to send them to
   uses: actions/github-script@v5
   if: steps.transfer-issue.outputs.transferred_issue_number != ''
   script: |
-    let transferredId = steps.transfer-issue.outputs.transferred_issue_number;
     await github.rest.issues.createComment({
-      issue_number: transferredId,
+      issue_number: `${{ steps.transfer-issue.outputs.transferred_issue_number}}`,
       owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: body
+      repo: `${{ steps.transfer-issue.outputs.transferred_repo }}`,
+      body: `@${ context.payload.issue.user.login } your issue is over here now!`
     });
 
 ```
