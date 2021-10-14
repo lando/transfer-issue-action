@@ -5,7 +5,7 @@ inputs:
   destination_repo:
     description: 'The destination repo.'
     required: false
-  github-token:
+  github_token:
     description: 'The GitHub token used to create an authenticated client.'
     default: ${{ github.token }}
     required: false
