@@ -2,13 +2,13 @@
 
 A GitHub Action for transferring issues between github repos.  It also has the ability to do the following:
 
-* Optionally create a stub issue in the original issue that is closed and locked.  This allows for a better user experience when search for issues in the old repo.  The stub message will have the following message attached to it as well:
+* Optionally create a stub issue in the original issue that is closed and locked.  This allows for a better user experience when search for issues in the old repo.  The stub issue will have the following comment attached to it as well:
   ```
   @issue-author this is a stub issue that has been created as a placeholder in this repo.
 
   Your original issue has been moved to link-to-transferred-repo-issue
   ```
-* Optionally create labels from a file and add the labels the transferred issue.
+* Optionally create labels from a file and add the labels to the transferred issue.
 * Optionally map the triggered label to a file of keyed repos to send the issue to.
 
 ## Inputs
@@ -85,7 +85,7 @@ trill: tronic
 
 ## Advanced Example
 
-In this example, we are not creating a stub and just updating the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
+In this example, we are using our own [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for authentication.  We are also not creating a stub and just adding a comment to the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
 
 ```
 - name: Transfer Issue & Create Stub
@@ -93,6 +93,7 @@ In this example, we are not creating a stub and just updating the tranferred iss
   id: transfer-issue
   with:
     create_stub: false
+    github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     labels_file_path: '.github/transfer-issue-labels.yml'
     map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
 - name: Update Transferred Issue
@@ -105,7 +106,6 @@ In this example, we are not creating a stub and just updating the tranferred iss
       repo: `${{ steps.transfer-issue.outputs.transferred_repo }}`,
       body: `@${ context.payload.issue.user.login } your issue is over here now!`
     });
-
 ```
 
 ## Notes

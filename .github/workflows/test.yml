@@ -14,17 +14,17 @@ jobs:
           - ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: run action
-        id: run_action
+      - name: Test Action
+        id: test_action
         uses: ./
         with: 
           github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           labels_file_path: '.github/transfer-issue-labels.yml'
           map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
       - name: Echo Output Data
-        if: steps.run_action.outputs.transferred_issue_number != ''
+        if: steps.test_action.outputs.transferred_issue_number != ''
         run: |
-          echo ${{steps.run_action.outputs.transferred_issue_number}}
-          echo ${{steps.run_action.outputs.transferred_issue_url}} 
-          echo ${{steps.run_action.outputs.transferred_repo}}    
+          echo ${{steps.test_action.outputs.transferred_issue_number}}
+          echo ${{steps.test_action.outputs.transferred_issue_url}} 
+          echo ${{steps.test_action.outputs.transferred_repo}}    
 
