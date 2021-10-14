@@ -37,7 +37,7 @@ This will send the issue in a `lando` org repo to `lando/transfer-repo`
 
 ```
 - name: Transfer Issue & Create Stub
-  uses: lando/transfer-issue-action@1.0.0
+  uses: lando/transfer-issue-action@1.2.0
   with:
     destination_repo: 'transfer-repo'
 ```
