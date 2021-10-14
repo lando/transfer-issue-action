@@ -15,18 +15,21 @@ A GitHub Action for transferring issues between github repos.  It also has the a
 
 Input | Description | Required | Default |
 ----------|-------------|:----------:|:-------:|
+| `pat_token` | The GitHub [Perosnal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) created with repo access. | yes | - |
 | `destination_repo` | The destination repo. | yes* |-|
-| `github_token` | The GitHub token used to create an authenticated client. | no | `${{github.token}}` |
 | `create_stub` | Create a stub issue with title and description in original repo. | no | `true` |
 | `labels_file_path` | Create labels if it doesn't exist in the transferred repo and tag the transferred issue. | no |-|
 | `map_repo_labels_file_path` | Maps the triggering label to a file keyed `label:destination_repo`. If the label is found, it will transfer the issue to that repo. If not, it will exit the process and not tranfer any issue. | yes* |-|
 
-_Note: You must have either `destination_repo` or `map_repo_labels_file_path` set in your action.  If not, it will throw an error._
+### Input Notes
+
+* You must have either `destination_repo` or `map_repo_labels_file_path` set in your action.  If not, it will throw an error.
+* The `GITHUB_TOKEN` provided by GitHub Actions will not work when transferring issue to another repo.  You will get the error `Resource not accessible by integration` if you try and use it.  Create a PAT with the repo check box and all its sub items checked.
 
 ## Outputs
 
 Output | Type | Description |
-----------|-------------|:----------:|
+----------|-------------|------------|
 | `transferred_issue_number` | String | The issue number of the transferred issue |
 | `transferred_issue_url` | String | The issue url of the transferred issue |
 | `transferred_repo` | String | The name of the destination repo |
@@ -37,8 +40,9 @@ This will send the issue in a `lando` org repo to `lando/transfer-repo`
 
 ```
 - name: Transfer Issue & Create Stub
-  uses: lando/transfer-issue-action@1.2.0
+  uses: lando/transfer-issue-action@1.3.0
   with:
+    pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     destination_repo: 'transfer-repo'
 ```
 
@@ -48,8 +52,9 @@ Set a file path for the labels yaml file to create labels and tag them on the is
 
 ```
 - name: Transfer Issue & Create Stub
-  uses: lando/transfer-issue-action@1.2.0
+  uses: lando/transfer-issue-action@1.3.0
   with:
+    pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     destination_repo: 'transfer-repo'
     labels_file_path: '.github/transfer-issue-labels.yml'
 ```
@@ -69,8 +74,9 @@ This will use our yml file to check tags to dtermine which repos to send them to
 
 ```
 - name: Transfer Issue & Create Stub
-  uses: lando/transfer-issue-action@1.2.0
+  uses: lando/transfer-issue-action@1.3.0
   with:
+    pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
 ```
 
@@ -85,15 +91,15 @@ trill: tronic
 
 ## Advanced Example
 
-In this example, we are using our own [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for authentication.  We are also not creating a stub and just adding a comment to the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
+In this example, we are not creating a stub and just adding a comment to the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
 
 ```
 - name: Transfer Issue & Create Stub
-  uses: lando/transfer-issue-action@1.2.0
+  uses: lando/transfer-issue-action@1.3.0
   id: transfer-issue
   with:
+    pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     create_stub: false
-    github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
     labels_file_path: '.github/transfer-issue-labels.yml'
     map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
 - name: Update Transferred Issue

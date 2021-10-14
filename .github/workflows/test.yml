@@ -18,7 +18,7 @@ jobs:
         id: test_action
         uses: ./
         with: 
-          github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           labels_file_path: '.github/transfer-issue-labels.yml'
           map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
       - name: Echo Output Data

@@ -5,10 +5,9 @@ inputs:
   destination_repo:
     description: 'The destination repo.'
     required: false
-  github_token:
-    description: 'The GitHub token used to create an authenticated client.'
-    default: ${{ github.token }}
-    required: false
+  pat_token:
+    description: 'The GitHub Perosnal Access Token.'
+    required: true
   create_stub:
     description: 'Create a stub issue with title and description in original repo.'
     default: true
