@@ -1,16 +1,15 @@
 # Transfer Issue GitHub Action
 
-A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.
+A GitHub Action for transferring issues between github repos.  It also has the ability to do the following:
 
-The stub issue will be created in the original repo as closed and locked with the message:
+* Optionally create a stub issue in the original issue that is closed and locked.  This allows for a better user experience when search for issues in the old repo.  The stub message will have the following message attached to it as well:
+  ```
+  @issue-author this is a stub issue that has been created as a placeholder in this repo.
 
-```
-@issue-author this is a stub issue that has been created as a placeholder in this repo.
-
-Your original issue has been moved to link-to-transferred-repo-issue
-```
-
-You can also create labels from a file and add the labels the transferred issue.  
+  Your original issue has been moved to link-to-transferred-repo-issue
+  ```
+* Optionally create labels from a file and add the labels the transferred issue.
+* Optionally map the triggered label to a file of keyed repos to send the issue to.
 
 ## Inputs
 
@@ -30,6 +29,7 @@ Output | Type | Description |
 ----------|-------------|:----------:|
 | `transferred_issue_number` | String | The issue number of the transferred issue |
 | `transferred_issue_url` | String | The issue url of the transferred issue |
+| `transferred_repo` | String | The name of the destination repo |
 
 ## Basic Example
 
@@ -81,6 +81,32 @@ This will send all issues tagged `bug` to the repo `lando/transfer-repo` if used
 ```
 bug: transfer-repo
 trill: tronic
+```
+
+## Advanced Example
+
+This will use our yml file to check tags to dtermine which repos to send them to.  Useful if you have a more complex use case.
+
+```
+- name: Transfer Issue & Create Stub
+  uses: lando/transfer-issue-action@1.2.0
+  id: transfer-issue
+  with:
+    create_stub: false
+    labels_file_path: '.github/transfer-issue-labels.yml'
+    map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
+- name: Update Transferred Issue
+  uses: actions/github-script@v5
+  if: steps.transfer-issue.outputs.transferred_issue_number != ''
+  script: |
+    let transferredId = steps.transfer-issue.outputs.transferred_issue_number;
+    await github.rest.issues.createComment({
+      issue_number: transferredId,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body: body
+    });
+
 ```
 
 ## Notes

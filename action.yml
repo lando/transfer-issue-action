@@ -24,6 +24,8 @@ outputs:
     description: 'The issue number of the transferred issue'
   transferred_issue_url:
     description: 'The issue url of the transferred issue'
+  transferred_repo:
+    description: 'The name of the destination repo'
 runs:
   using: 'docker'
   image: 'Dockerfile'
