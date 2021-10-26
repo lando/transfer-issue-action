@@ -19,13 +19,19 @@ jobs:
         id: new-issue
         with:
           debug: true
+          result-encoding: string
           script: |
-            return await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: 'transfer-issue-action',
-              title: 'Transfer Issue Action Tests'
-            });
-      - name: Get issue result
+            try  {
+              const data = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: 'transfer-issue-action',
+                title: 'Transfer Issue Action Tests'
+              });
+              return data.node_ id;
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+      - name: Get new issue id
         id: test-issue
         run: |
           echo "${{steps.new-issue.outputs.result}}"
