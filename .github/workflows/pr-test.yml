@@ -18,8 +18,9 @@ jobs:
         uses: actions/github-script@v5
         id: new-issue
         with:
+          debug: true
           script: |
-            return await octokit.rest.issues.create({
+            return await github.rest.issues.create({
               context.repo.owner,
               'lando/transfer-issue-action',
               'Transfer Issue Action Tests',
