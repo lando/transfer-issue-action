@@ -32,7 +32,7 @@ jobs:
           #     - "Other:C0FFEE"
           create_stub: true
           debug: true
-          test: ${{ test-labels }}
+          test: ${{ matrix.test-labels }}
 
       - name: Echo Output Data
         if: steps.test_action.outputs.new_issue_number != ''
