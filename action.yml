@@ -19,12 +19,14 @@ inputs:
     description: The GitHub Personal Access Token
     required: true
 outputs:
+  destination_repo:
+    description: The name of the destination repo
   new_issue_number:
     description: The number of the new issue
   new_issue_url:
     description: The url of the new issue
-  destination_repo:
-    description: The name of the destination repo
+  stub_issue_number:
+    description: The number of the created issue stub
 runs:
   using: docker
   image: Dockerfile

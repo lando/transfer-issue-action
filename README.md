@@ -43,9 +43,10 @@ Input | Description | Required | Default |
 
 Output | Type | Description |
 ----------|-------------|------------|
+| `destination_repo` | String | The name of the repo the issue was transferred to |
 | `new_issue_number` | String | The number of the new issue |
 | `new_issue_url` | String | The url of the new issue |
-| `destination_repo` | String | The name of the repo the issue was transferred to |
+| `stub_issue_number` | String | The number of the created issue stub |
 
 ## Basic Example
 
