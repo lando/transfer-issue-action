@@ -45,12 +45,10 @@ jobs:
           create_stub: true
           debug: true
           test: "${{steps.test-issue.outputs.id}}:holla"
-
-      # - name: Echo Output Data
-      #   if: steps.test_action.outputs.new_issue_number != ''
-      #   run: |
-      #     echo ${{steps.test_action.outputs.new_issue_number}}
-      #     echo ${{steps.test_action.outputs.new_issue_url}}
-      #     echo ${{steps.test_action.outputs.destination_repo}}
+      - name: Echo Output Data
+        run: |
+          echo ${{steps.test_action.outputs.new_issue_number}}
+          echo ${{steps.test_action.outputs.new_issue_url}}
+          echo ${{steps.test_action.outputs.destination_repo}}
 
 
