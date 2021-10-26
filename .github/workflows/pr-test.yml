@@ -24,7 +24,7 @@ jobs:
             try {
               const response = await github.rest.issues.create({
                 owner: context.repo.owner,
-                repo: 'transfer-issue-action',
+                repo: transfer-issue-action,
                 title: 'Transfer Issue Action Test Issue'
               });
               return response.data.node_id;
