@@ -63,12 +63,6 @@ jobs:
                 repo: '${{steps.test_action.outputs.destination_repo}}',
                 body: 'This issue was automatically created and transferred to test out this action. It will now automatically be closed'
               });
-              await github.rest.issues.createComment({
-                issue_number: '${{steps.test_action.outputs.stub_issue_number}}',
-                owner: context.repo.owner,
-                repo: 'transfer-issue-action',
-                body: 'This issue stub was automatically created to test out this action. It will now automatically be closed'
-              });
             } catch (error) {
               core.setFailed(error.message);
             }
@@ -82,12 +76,6 @@ jobs:
                 issue_number: '${{steps.test_action.outputs.new_issue_number}}',
                 owner: context.repo.owner,
                 repo: '${{steps.test_action.outputs.destination_repo}}',
-                state: 'closed'
-              });
-              await github.rest.issues.update({
-                issue_number: '${{steps.test_action.outputs.stub_issue_number}}',
-                owner: context.repo.owner,
-                repo: 'transfer-issue-action',
                 state: 'closed'
               });
             } catch (error) {
