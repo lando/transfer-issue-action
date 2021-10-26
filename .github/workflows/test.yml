@@ -25,11 +25,11 @@ jobs:
           router:
             holla: lando
             things: cli
-          apply_labels:
-            all:
-              - "Needs Triage:FF0000"
-            holla:
-              - "Other:C0FFEE"
+          # apply_labels:
+          #   all:
+          #     - "Needs Triage:FF0000"
+          #   holla:
+          #     - "Other:C0FFEE"
           create_stub: true
           debug: true
           test: ${{ test-labels }}
