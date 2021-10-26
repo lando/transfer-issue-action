@@ -11,6 +11,9 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
+        router:
+          - holla:lando
+          - things:cli
         test-labels:
           - holla
           - things
@@ -22,14 +25,8 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          router:
-            holla: lando
-            things: cli
-          # apply_labels:
-          #   all:
-          #     - "Needs Triage:FF0000"
-          #   holla:
-          #     - "Other:C0FFEE"
+          router: ${{ matrix.router }}
+          apply_label: "Needs Triage:C0FFEE"
           create_stub: true
           debug: true
           test: ${{ matrix.test-labels }}

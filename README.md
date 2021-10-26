@@ -14,19 +14,30 @@ It also has the ability to do the following:
 
 * Apply labels to the transffered issue.
 
+## Events
+
+This action was designed particularly for the below event but may work for other issue related events as well. YMMV.
+
+```yaml
+on:
+  issues:
+    types:
+      - labeled
+```
+
 ## Inputs
 
 Input | Description | Required | Default |
 ----------|-------------|:----------:|:-------:|
 | `token` | A GitHub [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) created with repo access | yes | - |
-| `router` | An array of label names and repo names | yes* |-|
-| `apply_labels` | An array of labels to apply to each issue once transferred | yes* |-|
+| `router` | A label to repo routing in the form "LABEL:REPO" | yes* |-|
+| `apply_label` | A label to apply on the new issue in the format "LABEL:HEXCODE" | yes* |-|
 | `create_stub` | Create a stub issue with title and description in original repo | no | `false` |
 | `debug` | Enable debug output | no | `false` |
 
 ### Input Notes
 
-The `GITHUB_TOKEN` secret provided by GitHub Actions will not work when transferring issues to another repo.  You will get the error `Resource not accessible by integration` if you try and use it.  Create a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the repo check box and all its sub items checked.
+* The `GITHUB_TOKEN` secret provided by GitHub Actions will not work when transferring issues to another repo.  You will get the error `Resource not accessible by integration` if you try and use it.  Create a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the repo check box and all its sub items checked.
 
 ## Outputs
 
@@ -40,47 +51,49 @@ Output | Type | Description |
 
 When an issue in the repo which implements this action is tagged with `holla` it gets transferred to within the same organization to a repo called `atcha`.
 
-```
+```yaml
 - name: Transfer Issue & Create Stub
   uses: lando/transfer-issue-action@v2
   with:
     token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-    router:
-      holla: atcha
+    router: holla:atcha
 ```
 
 ## Labels Example
 
-Does the same as above but when the new issue is created it applies the `Needs Triage` and `Other` labels and also creates a stub in the source repo.
+Does the same as above but when the new issue is created it applies the `Needs Triage` label and also creates a stub in the source repo.
 
-```
+```yaml
 - name: Transfer Issue & Create Stub
   uses: lando/transfer-issue-action@v2
   with:
     token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-    router:
-      holla: atcha
-    apply_labels:
-      _all_:
-        - "Needs Triage:FF0000"
-      atcha:
-        - "Other:C0FFEE"
+    router: holla:atcha
+    apply_label: "Needs Triage:FF0000"
     create_stub: true
-
 ```
 
 ## Advanced Example
 
-In this example, we are not creating a stub and instead adding a comment to the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script).
+In this example, we are forgoing a stub and instead adding a comment to the tranferred issue via [https://github.com/actions/github-script](https://github.com/actions/github-script). Also note the use of `strategy.matrix.router` which allows us to route different labels to different repos.
 
+`strategy.matrix`
+```yaml
+strategy:
+  matrix:
+    router:
+      - holla:lando
+      - things:cli
 ```
-- name: Transfer Issue & Create Stub
+
+`steps`
+```yaml
+- name: Transfer Issue & Comment
   uses: lando/transfer-issue-action@v2
   id: transfer-issue
   with:
     token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-    router:
-      holla: atcha
+    router: ${{ matrix.router }}
 - name: Update Transferred Issue
   uses: actions/github-script@v5
   if: steps.transfer-issue.outputs.new_issue_number != ''
@@ -96,7 +109,6 @@ In this example, we are not creating a stub and instead adding a comment to the 
 ## Notes
 
 GraphQL Mutations for transferring a repo only allows you to tranfer repos within the same owner/org.
-
 
 ## Changelog
 
