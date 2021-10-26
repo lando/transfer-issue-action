@@ -1,8 +1,6 @@
 name: Test Issue Action
 on:
-  issues:
-    types:
-      - labeled
+  pull_request:
 
 jobs:
   test-action:
@@ -13,6 +11,10 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
+        test-labels:
+          - holla
+          - things
+
     steps:
       - uses: actions/checkout@v2
       - name: Test Action
@@ -20,9 +22,18 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          router:
+            holla: lando
+            things: cli
+          apply_labels:
+            _all_:
+              - "Needs Triage:FF0000"
+            holla:
+              - "Other:C0FFEE"
+          create_stub: true
           debug: true
-          labels_file_path: '.github/transfer-issue-labels.yml'
-          map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
+          test: ${{ test-labels }}
+
       - name: Echo Output Data
         if: steps.test_action.outputs.new_issue_number != ''
         run: |
