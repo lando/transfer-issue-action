@@ -4,12 +4,12 @@ A GitHub Action for transferring issues between GitHub repos _within the same or
 
 It also has the ability to do the following:
 
-* Create a stub issue in the original issue that is closed and locked.  This allows for a better user experience when search for issues in the old repo.  The stub issue will have the following comment attached to it by default.
+* Create a stub issue in the original issue that is closed and locked.  This allows for a better user experience when searching for issues in the old repo.  The stub issue will look _like_ the below but with details relevant to _your_ issue.
 
   ```
-  @issue-author this is a stub issue that has been created as a placeholder in this repo.
+  @lando this is a stub issue that has been created as a placeholder in this repo.
 
-  Your original issue has been moved to link-to-transferred-repo-issue
+  Your original issue has been moved to [https://github.com/lando/transfer-issue-action/issues/53](https://github.com/lando/transfer-issue-action/issues/53)
   ```
 
 * Apply labels to the transffered issue.
