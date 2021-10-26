@@ -47,8 +47,36 @@ jobs:
           test: "${{steps.test-issue.outputs.id}}:holla"
       - name: Echo Output Data
         run: |
-          echo ${{steps.test_action.outputs.new_issue_number}}
-          echo ${{steps.test_action.outputs.new_issue_url}}
-          echo ${{steps.test_action.outputs.destination_repo}}
-
-
+          echo "NEW ISSUE: ${{steps.test_action.outputs.new_issue_number}}"
+          echo "NEW URL: ${{steps.test_action.outputs.new_issue_url}}"
+          echo "DESTINATION REPO: ${{steps.test_action.outputs.destination_repo}}"
+      - name: Comment on test issue
+        uses: actions/github-script@v5
+        with:
+          debug: true
+          script: |
+            try {
+              await github.rest.issues.createComment({
+                issue_number: '${{steps.test_action.outputs.new_issue_number}}',
+                owner: context.repo.owner,
+                repo: '${{steps.test_action.outputs.destination_repo}}',
+                body: 'This issue was automatically created and transferred to test out this action. It will now automatically be closed'
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+      - name: Close test issue for cleanliness purposes
+        uses: actions/github-script@v5
+        with:
+          debug: true
+          script: |
+            try {
+              await github.rest.issues.update({
+                issue_number: '${{steps.test_action.outputs.new_issue_number}}',
+                owner: context.repo.owner,
+                repo: '${{steps.test_action.outputs.destination_repo}}',
+                state: 'closed'
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
