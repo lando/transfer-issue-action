@@ -145,6 +145,15 @@ lando yarn
 yarn lint
 ```
 
+You can also open up a PR to test the action out.
+
+Additionally you can manually create an issue in this repo and label it with either `manual_issue_transfer_action_test` or `holla-tronic` to test the action.
+
+Note that in both the PR and manual testing scenarios we will:
+
+* Close the transferred issue _and_ stubbed issue if applicable for cleanliness purposes. Therefore you will want to look in the closed issues for evidence of the transfer.
+* Transfer the issue to the same repo as the one generating it eg from `lando/transfer-issue-action` to `lando/transfer-issue-action`. You can see that the transfer has happened by inspecting the transferred issue and noting the `lando-droid transferred this issue from lando/transfer-issue-action...` entry.
+
 ## Releasing
 
 ```bash

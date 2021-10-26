@@ -1,6 +1,8 @@
-name: Test Issue Transfer Action
+name: Manual Issue Transer Action Test
 on:
-  pull_request:
+  issues:
+    types:
+      - labeled
 
 jobs:
   test-action:
@@ -11,47 +13,26 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
+        router:
+          - manual_issue_transfer_action_test:issue-transfer-action
+          - holla-tronic:issue-transfer-action
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Create test issue
-        uses: actions/github-script@v5
-        id: new-issue
-        with:
-          debug: true
-          result-encoding: string
-          script: |
-            try {
-              const response = await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: 'transfer-issue-action',
-                title: 'Transfer Issue Action Test Issue'
-              });
-              return response.data.node_id;
-            } catch (error) {
-              core.setFailed(error.message);
-            }
-      - name: Get and set test issue id
-        id: test-issue
-        run: |
-          echo "::set-output name=id::${{steps.new-issue.outputs.result}}"
-      - name: Test Action
+      - name: Manual Action Test
         id: test_action
         uses: ./
         with:
           token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          router: holla:transfer-issue-action
-          apply_label: "Needs Triage:C0FFEE"
-          create_stub: true
+          router: ${{ matrix.router }}
+          apply_label: MANUAL ACTION TEST
           debug: true
-          test: "${{steps.test-issue.outputs.id}}:holla"
       - name: Echo Output Data
         run: |
           echo "DESTINATION REPO: ${{steps.test_action.outputs.destination_repo}}"
           echo "NEW ISSUE NUMBER: ${{steps.test_action.outputs.new_issue_number}}"
           echo "NEW ISSUE URL: ${{steps.test_action.outputs.new_issue_url}}"
           echo "STUB ISSUE NUMBER: ${{steps.test_action.outputs.stub_issue_number}}"
-      - name: Comment on test issue
+      - name: Comment on transferred issue
         uses: actions/github-script@v5
         with:
           debug: true
@@ -61,12 +42,12 @@ jobs:
                 issue_number: '${{steps.test_action.outputs.new_issue_number}}',
                 owner: context.repo.owner,
                 repo: '${{steps.test_action.outputs.destination_repo}}',
-                body: 'This issue was automatically created and transferred to test out this action. It will now automatically be closed.'
+                body: 'Comment to verify manual action test. The issue will now automatically be closed.'
               });
             } catch (error) {
               core.setFailed(error.message);
             }
-      - name: Close test issue for cleanliness purposes
+      - name: Close transferred issue
         uses: actions/github-script@v5
         with:
           debug: true
