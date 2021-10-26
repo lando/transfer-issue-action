@@ -11,30 +11,42 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-        router:
-          - holla:lando
-          - things:cli
-        test-labels:
-          - holla
-          - things
 
     steps:
       - uses: actions/checkout@v2
-      - name: Test Action
-        id: test_action
-        uses: ./
-        with:
-          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          router: ${{ matrix.router }}
-          apply_label: "Needs Triage:C0FFEE"
-          create_stub: true
-          debug: true
-          test: ${{ matrix.test-labels }}
-
-      - name: Echo Output Data
-        if: steps.test_action.outputs.new_issue_number != ''
+      - name: Create test issue
+        uses: actions/github-script@v5
+        id: new-issue
+        script: |
+          return await octokit.rest.issues.create({
+            context.repo.owner,
+            'lando/transfer-issue-action',
+            'Transfer Issue Action Tests',
+          });
+      - name: Get issue result
+        id: test-issue
         run: |
-          echo ${{steps.test_action.outputs.new_issue_number}}
-          echo ${{steps.test_action.outputs.new_issue_url}}
-          echo ${{steps.test_action.outputs.destination_repo}}
+          echo "${{steps.new-issue.outputs.result}}"
+          # echo "::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}"
+          # echo "::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}"
+          # echo "::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}"
+
+      # - name: Test Action
+      #   id: test_action
+      #   uses: ./
+      #   with:
+      #     token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+      #     router: holla:lando
+      #     apply_label: "Needs Triage:C0FFEE"
+      #     create_stub: true
+      #     debug: true
+      #     test_issue: ${{ matrix.test-labels }}
+
+      # - name: Echo Output Data
+      #   if: steps.test_action.outputs.new_issue_number != ''
+      #   run: |
+      #     echo ${{steps.test_action.outputs.new_issue_number}}
+      #     echo ${{steps.test_action.outputs.new_issue_url}}
+      #     echo ${{steps.test_action.outputs.destination_repo}}
+
 
