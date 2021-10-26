@@ -26,7 +26,7 @@ jobs:
             holla: lando
             things: cli
           apply_labels:
-            _all_:
+            all:
               - "Needs Triage:FF0000"
             holla:
               - "Other:C0FFEE"
