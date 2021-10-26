@@ -4,14 +4,13 @@ author: John Ouellet
 inputs:
   apply_label:
     description: A label to apply on the new issue in the format "LABEL:HEXCODE"
-    required: false
+    default: false
   create_stub:
     description: Create a stub issue with title and description in original repo
     default: false
-    required: false
   debug:
     description: Enable debug output
-    default: true
+    default: false
   router:
     description: A label to repo routing in the form "LABEL:REPO"
     required: true
