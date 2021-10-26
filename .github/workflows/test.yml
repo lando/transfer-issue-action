@@ -1,7 +1,8 @@
 name: Test Issue Action
 on:
   issues:
-    types: [labeled]
+    types:
+      - labeled
 
 jobs:
   test-action:
@@ -17,14 +18,15 @@ jobs:
       - name: Test Action
         id: test_action
         uses: ./
-        with: 
-          pat_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+        with:
+          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          debug: true
           labels_file_path: '.github/transfer-issue-labels.yml'
           map_repo_labels_file_path: '.github/transfer-issue-map-repo-labels.yml'
       - name: Echo Output Data
-        if: steps.test_action.outputs.transferred_issue_number != ''
+        if: steps.test_action.outputs.new_issue_number != ''
         run: |
-          echo ${{steps.test_action.outputs.transferred_issue_number}}
-          echo ${{steps.test_action.outputs.transferred_issue_url}} 
-          echo ${{steps.test_action.outputs.transferred_repo}}    
+          echo ${{steps.test_action.outputs.new_issue_number}}
+          echo ${{steps.test_action.outputs.new_issue_url}}
+          echo ${{steps.test_action.outputs.destination_repo}}
 
