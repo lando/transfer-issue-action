@@ -21,13 +21,13 @@ jobs:
           debug: true
           result-encoding: string
           script: |
-            try  {
+            try {
               const data = await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: 'transfer-issue-action',
                 title: 'Transfer Issue Action Tests'
               });
-              return data.node_ id;
+              return data.node_id;
             } catch (error) {
               core.setFailed(error.message);
             }
