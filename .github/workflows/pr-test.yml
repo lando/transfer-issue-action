@@ -22,12 +22,12 @@ jobs:
           result-encoding: string
           script: |
             try {
-              const data = await github.rest.issues.create({
+              const response = await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: 'transfer-issue-action',
                 title: 'Transfer Issue Action Tests'
               });
-              return data.node_id;
+              return response.data.node_id;
             } catch (error) {
               core.setFailed(error.message);
             }
