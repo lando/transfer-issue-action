@@ -40,11 +40,11 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          router: holla:lando
+          router: holla:transfer-issue-action
           apply_label: "Needs Triage:C0FFEE"
           create_stub: true
           debug: true
-          test_issue: ${{steps.test-issue.outputs.id}}
+          test: "${{steps.test-issue.outputs.id}}:holla"
 
       # - name: Echo Output Data
       #   if: steps.test_action.outputs.new_issue_number != ''
