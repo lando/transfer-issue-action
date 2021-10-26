@@ -19,8 +19,7 @@
   "dependencies": {
     "@actions/core": "^1.5.0",
     "@actions/github": "^5.0.0",
-    "debug": "^4.3.2",
-    "js-yaml": "^4.1.0"
+    "debug": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -29,7 +28,7 @@
     "version-bump-prompt": "^6.1.0"
   },
   "scripts": {
-    "lint": "eslint lib/index.js",
+    "lint": "eslint .",
     "release": "bump --tag --all --push package.json"
   }
 }
