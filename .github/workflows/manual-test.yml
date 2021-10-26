@@ -34,6 +34,7 @@ jobs:
           echo "NEW ISSUE URL: ${{steps.test_action.outputs.new_issue_url}}"
           echo "STUB ISSUE NUMBER: ${{steps.test_action.outputs.stub_issue_number}}"
       - name: Comment on transferred issue
+        if: steps.test_action.outputs.new_issue_number != ''
         uses: actions/github-script@v5
         with:
           debug: true
@@ -49,6 +50,7 @@ jobs:
               core.setFailed(error.message);
             }
       - name: Close transferred issue
+        if: steps.test_action.outputs.new_issue_number != ''
         uses: actions/github-script@v5
         with:
           debug: true
