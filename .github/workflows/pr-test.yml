@@ -17,12 +17,13 @@ jobs:
       - name: Create test issue
         uses: actions/github-script@v5
         id: new-issue
-        script: |
-          return await octokit.rest.issues.create({
-            context.repo.owner,
-            'lando/transfer-issue-action',
-            'Transfer Issue Action Tests',
-          });
+        with:
+          script: |
+            return await octokit.rest.issues.create({
+              context.repo.owner,
+              'lando/transfer-issue-action',
+              'Transfer Issue Action Tests',
+            });
       - name: Get issue result
         id: test-issue
         run: |

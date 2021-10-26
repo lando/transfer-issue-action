@@ -97,13 +97,14 @@ strategy:
 - name: Update Transferred Issue
   uses: actions/github-script@v5
   if: steps.transfer-issue.outputs.new_issue_number != ''
-  script: |
-    await github.rest.issues.createComment({
-      issue_number: `${{ steps.transfer-issue.outputs.new_issue_number}}`,
-      owner: context.repo.owner,
-      repo: `${{ steps.transfer-issue.outputs.destinatiom_repo }}`,
-      body: `@${ context.payload.issue.user.login } your issue is over here now!`
-    });
+  with:
+    script: |
+      await github.rest.issues.createComment({
+        issue_number: `${{ steps.transfer-issue.outputs.new_issue_number}}`,
+        owner: context.repo.owner,
+        repo: `${{ steps.transfer-issue.outputs.destinatiom_repo }}`,
+        body: `@${ context.payload.issue.user.login } your issue is over here now!`
+      });
 ```
 
 ## Notes
