@@ -21,9 +21,9 @@ jobs:
           debug: true
           script: |
             return await github.rest.issues.create({
-              context.repo.owner,
-              'lando/transfer-issue-action',
-              'Transfer Issue Action Tests',
+              owner: context.repo.owner,
+              repo: 'lando/transfer-issue-action',
+              title: 'Transfer Issue Action Tests'
             });
       - name: Get issue result
         id: test-issue
@@ -32,6 +32,13 @@ jobs:
           # echo "::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}"
           # echo "::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}"
           # echo "::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}"
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
 
       # - name: Test Action
       #   id: test_action
