@@ -15,7 +15,7 @@ jobs:
           - ubuntu-20.04
         router:
           - manual_issue_transfer_action_test:transfer-issue-action
-          - holla-tronic:transfer-issue-action2
+          - holla-tronic:transfer-issue-action
 
     steps:
       - uses: actions/checkout@v2
