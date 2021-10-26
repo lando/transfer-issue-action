@@ -12,5 +12,8 @@
       "named": "never",
       "asyncArrow": "never"
     }]
+  },
+  "env": {
+    "mocha": true
   }
 }

@@ -1,33 +1,35 @@
-name: 'Transfer Issue & Create Stub'
-description: 'A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.'
-author: 'John Ouellet'
+name: Transfer Issue & Create Stub
+description: A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.
+author: John Ouellet
 inputs:
-  destination_repo:
-    description: 'The destination repo.'
+  apply_label:
+    description: A label to apply on the new issue in the format "LABEL:HEXCODE"
     required: false
-  pat_token:
-    description: 'The GitHub Perosnal Access Token.'
-    required: true
   create_stub:
-    description: 'Create a stub issue with title and description in original repo.'
+    description: Create a stub issue with title and description in original repo
+    default: false
+    required: false
+  debug:
+    description: Enable debug output
     default: true
-    required: false
-  labels_file_path:
-    description: 'Create a label if it does not exist in the trasnferred repo and tag the transferred issue.'
-    required: false
-  map_repo_labels_file_path:
-    description: 'Maps the triggering label to a file keyed `label:destination_repo`. If the label is found, it will transfer the issue to that repo. If not, it will exit the process and not tranfer any issue'
-    required: false
+  router:
+    description: A label to repo routing in the form "LABEL:REPO"
+    required: true
+  token:
+    description: The GitHub Personal Access Token
+    required: true
 outputs:
-  transferred_issue_number:
-    description: 'The issue number of the transferred issue'
-  transferred_issue_url:
-    description: 'The issue url of the transferred issue'
-  transferred_repo:
-    description: 'The name of the destination repo'
+  destination_repo:
+    description: The name of the destination repo
+  new_issue_number:
+    description: The number of the new issue
+  new_issue_url:
+    description: The url of the new issue
+  stub_issue_number:
+    description: The number of the created issue stub
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: docker
+  image: Dockerfile
 branding:
   color: "green"
-  icon: "arrow-right-circle"  
+  icon: "arrow-right-circle"
