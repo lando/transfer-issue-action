@@ -30,5 +30,5 @@ runs:
   using: docker
   image: Dockerfile
 branding:
-  color: "green"
+  color: "purple"
   icon: "arrow-right-circle"
