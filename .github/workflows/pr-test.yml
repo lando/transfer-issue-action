@@ -10,10 +10,10 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Create test issue
         uses: actions/github-script@v5
         id: new-issue
@@ -24,7 +24,7 @@ jobs:
             try {
               const response = await github.rest.issues.create({
                 owner: context.repo.owner,
-                repo: transfer-issue-action,
+                repo: 'transfer-issue-action',
                 title: 'Transfer Issue Action Test Issue'
               });
               return response.data.node_id;
@@ -33,8 +33,7 @@ jobs:
             }
       - name: Get and set test issue id
         id: test-issue
-        run: |
-          echo "::set-output name=id::${{steps.new-issue.outputs.result}}"
+        run: echo "id=${{steps.new-issue.outputs.result}}" >> $GITHUB_OUTPUT
       - name: Test Action
         id: test_action
         uses: ./

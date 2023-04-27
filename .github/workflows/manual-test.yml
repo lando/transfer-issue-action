@@ -18,7 +18,7 @@ jobs:
           - holla-tronic:transfer-issue-action
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Manual Action Test
         id: test_action
         uses: ./
