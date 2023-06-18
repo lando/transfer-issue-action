@@ -26,6 +26,7 @@ outputs:
     description: The url of the new issue
   stub_issue_number:
     description: The number of the created issue stub
+
 runs:
   using: docker
   image: Dockerfile
