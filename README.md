@@ -118,15 +118,14 @@ We try to log all changes big and small in both [THE CHANGELOG](https://github.c
 
 ## Development
 
-* Requires [Node 14+](https://nodejs.org/dist/latest-v14.x/)
-* Prefers [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)
+* Requires [Node 18+](https://nodejs.org/dist/latest-v14.x/)
 
 ```bash
 git clone https://github.com/lando/transfer-issue-action.git && cd transfer-issue-action
-yarn install
+npm install
 ```
 
-If you dont' want to install Node 14 or Yarn for whatever reason you can install [Lando](https://docs.lando.dev/basics/installation.html) and use that:
+If you dont' want to install Node 18+ for whatever reason you can install [Lando](https://docs.lando.dev/basics/installation.html) and use that:
 
 ```bash
 git clone https://github.com/lando/transfer-issue-action.git && cd transfer-issue-action
@@ -135,14 +134,14 @@ lando start
 
 # Run commands
 lando node
-lando yarn
+lando npm
 ```
 
 ## Testing
 
 ```bash
 # Lint the code
-yarn lint
+npm run lint
 ```
 
 You can also open up a PR to test the action out.
