@@ -35,9 +35,10 @@ jobs:
           echo "STUB ISSUE NUMBER: ${{steps.test_action.outputs.stub_issue_number}}"
       - name: Comment on transferred issue
         if: steps.test_action.outputs.new_issue_number != ''
-        uses: actions/github-script@v5
+        uses: actions/github-script@v7
         with:
           debug: true
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             try {
               await github.rest.issues.createComment({
@@ -51,9 +52,10 @@ jobs:
             }
       - name: Close transferred issue
         if: steps.test_action.outputs.new_issue_number != ''
-        uses: actions/github-script@v5
+        uses: actions/github-script@v7
         with:
           debug: true
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             try {
               await github.rest.issues.update({

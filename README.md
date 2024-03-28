@@ -37,7 +37,7 @@ Input | Description | Required | Default |
 
 ### Input Notes
 
-* The `GITHUB_TOKEN` secret provided by GitHub Actions will not work when transferring issues to another repo.  You will get the error `Resource not accessible by integration` if you try and use it.  Create a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the repo check box and all its sub items checked.
+* The `GITHUB_TOKEN` secret provided by GitHub Actions will not work when transferring issues to another repo.  You will get the error `Resource not accessible by integration` if you try and use it.  Create a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the `repo` check box and all its sub items checked.
 
 ## Outputs
 
