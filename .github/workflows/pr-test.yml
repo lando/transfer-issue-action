@@ -38,7 +38,7 @@ jobs:
         id: test_action
         uses: ./
         with:
-          token: ${{ secrets.RTFM47_COAXIUM_INJECTOR }}
+          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           router: holla:transfer-issue-action
           apply_label: "Needs Triage:C0FFEE"
           create_stub: true

@@ -23,7 +23,7 @@ jobs:
         id: test_action
         uses: ./
         with:
-          token: ${{ secrets.RTFM47_COAXIUM_INJECTOR }}
+          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           router: ${{ matrix.router }}
           apply_label: MANUAL ACTION TEST
           debug: true
