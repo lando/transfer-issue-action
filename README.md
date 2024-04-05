@@ -157,6 +157,11 @@ Note that in both the PR and manual testing scenarios we will:
 
 Create a release and publish to [GitHub Actions Marketplace](https://docs.github.com/en/enterprise-cloud@latest/actions/creating-actions/publishing-actions-in-github-marketplace). Note that the release tag must be a [semantic version](https://semver.org/).
 
+## Maintainers
+
+* [@pirog](https://github.com/pirog)
+* [@reynoldsalec](https://github.com/reynoldsalec)
+
 ## Contributors
 
 <a href="https://github.com/lando/transfer-issue-action/graphs/contributors">
