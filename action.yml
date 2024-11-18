@@ -8,6 +8,15 @@ inputs:
   create_stub:
     description: Create a stub issue with title and description in original repo
     default: false
+  allow_private_public_transfer:
+    description: Do we allow transferring a private issue to a public repo
+    default: false    
+  create_labels_if_missing:
+    description: Whether to create labels if they don't exist in the target repository (matched by name)
+    default: false
+  enable_custom_label_routing:
+    description:  Make it possible to route labels to any repository of the organization by providing the repository name in the label name
+    default: false    
   debug:
     description: Enable debug output
     default: false

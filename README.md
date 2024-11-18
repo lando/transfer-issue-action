@@ -13,6 +13,7 @@ It also has the ability to do the following:
   ```
 
 * Apply labels to the transffered issue.
+* Create labels in the destination repository if they are missing.
 
 ## Events
 
@@ -25,6 +26,32 @@ on:
       - labeled
 ```
 
+## Transferring from Private to Public repositories
+
+Transferring issues from private to public repositories is not supported by GitHub by default ([see related post here](https://github.com/orgs/community/discussions/21979#discussioncomment-4800558)).
+
+Nevertheless the community has found a way to go around that limitation, process that can be entirely automated.
+
+When `allow_private_public_transfer` is enabled, and if a request is made to transfer to an issue from a private repository to a public one, a temporary private repository will be automatically created, the issue will be transferred to that repository which will then be made public. Finally after the transfer, the repository will be deleted.
+
+This manipulation requires your Personal API Token to have the `delete_repo` scope. 
+
+The name of that temporary repository is composed of a stringified date to which a random 5 characters string is appended. 
+
+This option is disabled by default.
+
+## Route to any repository based on the label
+
+This action can be used to route an issue to a pre-set repository, but also, if enabled, to any repository of the organization.
+
+By enabling `enable_custom_label_routing`, users can transfer their issue to any repository by attaching a label such as `transfer:my-other-repo`. 
+
+This option is to be used in conjunction with the `router` option, by the repository part of the router empty.
+
+When `router` is set to `transfer:` and if the user creates a label such as `transfer:my-other-repo`, the issue will be automatically transferred to the `my-other-repo` repository.
+
+This option is disabled by default.
+
 ## Inputs
 
 Input | Description | Required | Default |
@@ -33,6 +60,10 @@ Input | Description | Required | Default |
 | `router` | A label to repo routing in the form "LABEL:REPO" | yes* |-|
 | `apply_label` | A label to apply on the new issue in the format "LABEL:HEXCODE" | yes* |-|
 | `create_stub` | Create a stub issue with title and description in original repo | no | `false` |
+| `debug` | Enable debug output | no | `false` |
+| `allow_private_public_transfer` | Allow issues to be transferred from private to public repositories. | no | `false` |
+| `enable_custom_label_routing` | Make it possible to route labels to any repository of the organization by providing the repository name in the label name | no | `false` |
+| `create_labels_if_missing` | Create labels in the destination repository if missing | no | `false` |
 | `debug` | Enable debug output | no | `false` |
 
 ### Input Notes
