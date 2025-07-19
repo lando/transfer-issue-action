@@ -3,7 +3,7 @@
   "description": "A GitHub Action for transferring issues between github repos with the ability to create a stub issue in the original repo.",
   "version": "2.1.0",
   "author": "Mike Pirog @pirog",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "repository": "https://github.com/lando/transfer-issue-action",
   "bugs": "https://github.com/lando/transfer-issue-action/issues",
   "homepage": "https://github.com/lando/transfer-issue-action",
