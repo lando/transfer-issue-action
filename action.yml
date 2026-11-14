@@ -14,6 +14,10 @@ inputs:
   router:
     description: A label to repo routing in the form "LABEL:REPO"
     required: true
+  test:
+    description: "Internal integration-test override in the form ISSUE_NODE_ID:LABEL; leave unset for normal events."
+    required: false
+    default: ""
   token:
     description: The GitHub Personal Access Token
     required: true
