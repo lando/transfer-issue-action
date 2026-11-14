@@ -1,7 +1,7 @@
 ## Unreleased
 
 * Updated the Docker action's production `@actions/github` dependency from v5 to v6, including Octokit core v5, request v8, and request-error v5 in the committed lockfile.
-* Raised the supported local Node.js minimum to 18; the Docker action continues to use Node.js 20.
+* Updated the project license from GPL-3.0 to MIT.
 * Added credential-free action tests for issue transfer, optional stubs/labels, unmatched labels, and API failures using the locked Octokit stack.
 * Refreshed CI helper action runtimes and declared the existing internal test input so workflow validation succeeds.
 
