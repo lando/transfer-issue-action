@@ -2,83 +2,19 @@ name: Test Issue Transfer Action
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test-action:
-    runs-on: ${{ matrix.os }}
-    env:
-      TERM: xterm
-    strategy:
-      matrix:
-        os:
-          - ubuntu-22.04
-
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - name: Create test issue
-        uses: actions/github-script@v5
-        id: new-issue
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          debug: true
-          result-encoding: string
-          script: |
-            try {
-              const response = await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: 'transfer-issue-action',
-                title: 'Transfer Issue Action Test Issue'
-              });
-              return response.data.node_id;
-            } catch (error) {
-              core.setFailed(error.message);
-            }
-      - name: Get and set test issue id
-        id: test-issue
-        run: echo "id=${{steps.new-issue.outputs.result}}" >> $GITHUB_OUTPUT
-      - name: Test Action
-        id: test_action
-        uses: ./
-        with:
-          token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          router: holla:transfer-issue-action
-          apply_label: "Needs Triage:C0FFEE"
-          create_stub: true
-          debug: true
-          test: "${{steps.test-issue.outputs.id}}:holla"
-      - name: Echo Output Data
-        run: |
-          echo "DESTINATION REPO: ${{steps.test_action.outputs.destination_repo}}"
-          echo "NEW ISSUE NUMBER: ${{steps.test_action.outputs.new_issue_number}}"
-          echo "NEW ISSUE URL: ${{steps.test_action.outputs.new_issue_url}}"
-          echo "STUB ISSUE NUMBER: ${{steps.test_action.outputs.stub_issue_number}}"
-      - name: Comment on test issue
-        uses: actions/github-script@v7
-        with:
-          debug: true
-          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          script: |
-            try {
-              await github.rest.issues.createComment({
-                issue_number: '${{steps.test_action.outputs.new_issue_number}}',
-                owner: context.repo.owner,
-                repo: '${{steps.test_action.outputs.destination_repo}}',
-                body: 'This issue was automatically created and transferred to test out this action. It will now automatically be closed.'
-              });
-            } catch (error) {
-              core.setFailed(error.message);
-            }
-      - name: Close test issue for cleanliness purposes
-        uses: actions/github-script@v7
-        with:
-          debug: true
-          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          script: |
-            try {
-              await github.rest.issues.update({
-                issue_number: '${{steps.test_action.outputs.new_issue_number}}',
-                owner: context.repo.owner,
-                repo: '${{steps.test_action.outputs.destination_repo}}',
-                state: 'closed'
-              });
-            } catch (error) {
-              core.setFailed(error.message);
-            }
+          node-version: '20'
+          cache: npm
+      - name: Install locked production dependencies
+        run: npm ci --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Test action without GitHub writes
+        run: npm test

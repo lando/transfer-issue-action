@@ -27,6 +27,7 @@
     "eslint": "^7.32.0"
   },
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --test test/*.test.js"
   }
 }

@@ -1,3 +1,10 @@
+## Unreleased
+
+* Updated the Docker action's production `@actions/github` dependency from v5 to v6, including Octokit core v5, request v8, and request-error v5 in the committed lockfile.
+* Updated the project license from GPL-3.0 to MIT.
+* Added credential-free action tests for issue transfer, optional stubs/labels, unmatched labels, and API failures using the locked Octokit stack.
+* Refreshed CI helper action runtimes and declared the existing internal test input so workflow validation succeeds.
+
 ## v2.1.0 [March 28, 2024](https://github.com/lando/transfer-issue-action/releases/tag/v2.1.0)
 
 * Updated to `node20`
